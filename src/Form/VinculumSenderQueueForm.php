@@ -81,7 +81,7 @@ class VinculumSenderQueueForm extends FormBase {
 
     $form['help'] = array(
       '#type' => 'markup',
-      '#markup' => $this->t('Submitting this form will process the Manual Queue which contains @number items.', array('@number' => $queue->numberOfItems())),
+      '#markup' => $this->t('Submitting this form will process the "@queue" queue which contains @number items.', array('@queue' => $this->getQueue(),'@number' => $queue->numberOfItems())),
     );
     $form['actions']['#type'] = 'actions';
 
