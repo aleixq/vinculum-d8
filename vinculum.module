@@ -62,9 +62,7 @@ function vinculum_entity_insert(Drupal\Core\Entity\EntityInterface $entity)
   /** @var QueueFactory $queue_factory */
   $queue_factory = \Drupal::service('queue');
   /** @var QueueInterface $queue */
-kprint_r(\Drupal::config('vinculum.settings')->get('use_cron')); 
   $queue = $queue_factory->get(\Drupal::config('vinculum.settings')->get('use_cron')? 'cron_vinculum_sender' : 'manual_vinculum_sender');
-kprint_r($queue);
   $item = new \stdClass();
   $item->nid = $entity->id();
   $queue->createItem($entity);
