@@ -1,0 +1,13 @@
+vinculum.settings: # The first plugin ID
+  title: 'Settings'
+  route_name: vinculum.settings
+  base_route: vinculum.settings
+vinculum.queue:
+  title: 'Sending Queue'
+  route_name: vinculum.queue
+  description: 'Vinculum sending queue'
+  base_route: vinculum.settings
+vinculum.received:
+  title: 'Received'
+  route_name: vinculum.received_vinculums
+  base_route: vinculum.settings

@@ -1,0 +1,80 @@
+<?php
+
+/**
+ * @file
+ * Contains vinculum.module..
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Queue\QueueFactory;
+use Drupal\Core\Queue\QueueInterface;
+use Symfony\Component\DomCrawler\Crawler;
+
+
+// User-agent used when extracting titles and excerpts.
+define('VINCULUM_UA', 'Drupal Refback (+http://drupal.org/project/vinculum)');
+
+// The local node could not be found.
+define('VINCULUM_ERROR_LOCAL_NODE_NOT_FOUND', 1);
+
+// The local node could not be used as a ref-back resource (e.g., ref-backs are
+// disabled on the node).
+define('VINCULUM_ERROR_LOCAL_NODE_REFBACK_NOT_ALLOWED', 2);
+
+// The ref-back has previously been registered.
+define('VINCULUM_ERROR_REFBACK_ALREADY_REGISTERED', 3);
+
+// The ref-back source does not contain the link to target
+define('VINCULUM_ERROR_REMOTE_URL_MISSING_LINK', 4);
+
+
+/**
+ * Implements hook_help().
+ */
+function vinculum_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the vinculum module.
+    case 'help.page.vinculum':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('vinculum raw functionality') . '</p>';
+      return $output;
+
+    default:
+  }
+}
+
+
+/*
+ * Implements hook_ENTITY_TYPE_insert().
+ */
+function vinculum_entity_insert(Drupal\Core\Entity\EntityInterface $entity)
+{
+  //TODO allow other entities to use vinculums
+  if ($entity->getEntityTypeId() != 'node') {
+    return;
+  }
+
+  if (!(bool) $entity->get('status')) {
+    return;
+  }
+  /** @var QueueFactory $queue_factory */
+  $queue_factory = \Drupal::service('queue');
+  /** @var QueueInterface $queue */
+kprint_r(\Drupal::config('vinculum.settings')->get('use_cron')); 
+  $queue = $queue_factory->get(\Drupal::config('vinculum.settings')->get('use_cron')? 'cron_vinculum_sender' : 'manual_vinculum_sender');
+kprint_r($queue);
+  $item = new \stdClass();
+  $item->nid = $entity->id();
+  $queue->createItem($entity);
+
+}
+
+/*
+ * Implements hook_ENTITY_TYPE_update().
+ */
+function vinculum_entity_update(Drupal\Core\Entity\EntityInterface $entity){
+  vinculum_entity_insert($entity);
+}
+

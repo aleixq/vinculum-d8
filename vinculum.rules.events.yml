@@ -1,0 +1,10 @@
+vinculum_send:
+  label: 'Vinculum has been sent'
+  category: 'Vinculum'
+  context:
+    source_url:
+      type: 'entity'
+      label: 'Source content'
+    target_url:
+      type: 'string'
+      label: 'Target url'

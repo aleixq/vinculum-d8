@@ -1,0 +1,35 @@
+vinculum.queue:
+  path: '/admin/vinculum/queue'
+  defaults:
+    _form: '\Drupal\vinculum\Form\VinculumSenderQueueForm'
+    _title: 'Vinculum sender'
+  requirements:
+    _permission: 'administer vinculum'
+vinculum.settings:
+  path: '/admin/vinculum'
+  defaults:
+    _form: '\Drupal\vinculum\Form\VinculumSettingsForm'
+    _title: 'Vinculum'
+  requirements:
+    _permission: 'administer vinculum'
+vinculum.received_vinculums:
+  path: '/admin/vinculum/received'
+  defaults:
+    _title: 'Received vinculums'
+    _entity_list: 'vinculum_received'
+  requirements:
+    _permission: 'administer vinculum'
+entity.vinculum_received.canonical:
+  path: '/vinculum/{vinculum_received}'
+  defaults:
+    _entity_view: 'vinculum_received'
+    _title: 'Received Vinculum'
+  requirements:
+    _entity_access: 'vinculum_received.view'
+entity.vinculum_received.delete_form:
+  path: '/vinculum/{vinculum_received}/delete'
+  defaults:
+    _title: 'Delete'
+    _entity_form: 'vinculum_received.delete'
+  requirements:
+    _entity_access: 'vinculum_received.delete'
