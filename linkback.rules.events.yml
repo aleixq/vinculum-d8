@@ -1,6 +1,6 @@
-vinculum_send:
-  label: 'Vinculum has been sent'
-  category: 'Vinculum'
+linkback_send:
+  label: 'Linkback has been sent'
+  category: 'Linkback'
   context:
     source_url:
       type: 'entity'

@@ -1,13 +1,13 @@
 <?php
 /**
  * @file
- * Contains \Drupal\vinculum\Entity\VinculumReceived.
+ * Contains \Drupal\linkback\Entity\LinkbackReceived.
  */
 
-namespace Drupal\vinculum\Entity;
+namespace Drupal\linkback\Entity;
 
-use Drupal\vinculum\VinculumReceivedInterface;
-use Drupal\vinculum\Exception\VinculumException;
+use Drupal\linkback\LinkbackReceivedInterface;
+use Drupal\linkback\Exception\LinkbackException;
 use Drupal\Core\Entity\ContentEntityBase;
 use Drupal\Core\Entity\EntityChangedTrait;
 use Drupal\Core\Field\BaseFieldDefinition;
@@ -22,14 +22,14 @@ use RuntimeException;
 use Guzzle\Http\Client;
 
 /**
- * Defines the VinculumReceived entity for received ref-backs.
+ * Defines the LinkbackReceived entity for received ref-backs.
  *
- * @ingroup vinculum
+ * @ingroup linkback
  *
  * @ContentEntityType(
- *   id = "vinculum_received",
- *   label = @Translation("Vinculum received"),
- *   base_table = "vinculum_received",
+ *   id = "linkback_received",
+ *   label = @Translation("Linkback received"),
+ *   base_table = "linkback_received",
  *   entity_keys = {
  *     "id" = "id",
  *     "label" = "title",
@@ -37,23 +37,23 @@ use Guzzle\Http\Client;
  *   },
  *   handlers = {
  *     "view_builder" = "Drupal\Core\Entity\EntityViewBuilder",
- *     "views_data" = "Drupal\vinculum\VinculumViewsData",
- *     "list_builder" = "Drupal\vinculum\VinculumListBuilder",
+ *     "views_data" = "Drupal\linkback\LinkbackViewsData",
+ *     "list_builder" = "Drupal\linkback\LinkbackListBuilder",
  *     "form" = {
- *       "delete" = "Drupal\vinculum\Form\VinculumReceivedDeleteForm"
+ *       "delete" = "Drupal\linkback\Form\LinkbackReceivedDeleteForm"
  *     },
- *     "access" = "\Drupal\vinculum\VinculumReceivedAccessControlHandler"
+ *     "access" = "\Drupal\linkback\LinkbackReceivedAccessControlHandler"
  *   },
  *   links = {
- *     "canonical" = "/vinculum/{vinculum_received}",
- *     "delete-form" = "/vinculum/{vinculum_received}/delete",
+ *     "canonical" = "/linkback/{linkback_received}",
+ *     "delete-form" = "/linkback/{linkback_received}/delete",
  *   },
  *   constraints = {
- *     "UnregisteredVinculum" = {}
+ *     "UnregisteredLinkback" = {}
  *   }
  * )
  */
-class VinculumReceived extends ContentEntityBase implements VinculumReceivedInterface {
+class LinkbackReceived extends ContentEntityBase implements LinkbackReceivedInterface {
 
    use EntityChangedTrait;
    /**
@@ -247,13 +247,13 @@ class VinculumReceived extends ContentEntityBase implements VinculumReceivedInte
     // Standard field, used as unique if primary index.
     $fields['id'] = BaseFieldDefinition::create('integer')
       ->setLabel(t('ID'))
-      ->setDescription(t('The unique ID for this vinculum_received record..'))
+      ->setDescription(t('The unique ID for this linkback_received record..'))
       ->setReadOnly(TRUE);
 
     // Standard field, unique outside of the scope of the current project.
     $fields['uuid'] = BaseFieldDefinition::create('uuid')
       ->setLabel(t('UUID'))
-      ->setDescription(t('The UUID of the vinculum_received entity.'))
+      ->setDescription(t('The UUID of the linkback_received entity.'))
       ->setReadOnly(TRUE);
 
     // The content id for this record.
@@ -280,7 +280,7 @@ class VinculumReceived extends ContentEntityBase implements VinculumReceivedInte
   
      $fields['handler'] = BaseFieldDefinition::create('string')
       ->setLabel(t('Handler'))
-      ->setDescription(t("The handler for this vinculum."))
+      ->setDescription(t("The handler for this linkback."))
       ->setRequired(TRUE);
    
 
@@ -291,11 +291,11 @@ class VinculumReceived extends ContentEntityBase implements VinculumReceivedInte
    
     $fields['created'] = BaseFieldDefinition::create('created')
       ->setLabel(t('Created'))
-      ->setDescription(t('The time that the vinculum was created.'));
+      ->setDescription(t('The time that the linkback was created.'));
  
     $fields['changed'] = BaseFieldDefinition::create('changed')
       ->setLabel(t('Changed'))
-      ->setDescription(t('The time that the vinculum was changed.'));
+      ->setDescription(t('The time that the linkback was changed.'));
    
 
     return $fields;
@@ -330,7 +330,7 @@ class VinculumReceived extends ContentEntityBase implements VinculumReceivedInte
     }
     $title_excerpt = $this->getTitleExcerpt((string)$data);
     if (!$title_excerpt){
-      throw new VinculumException(t('No link found in source url referencing content with id %id', array('%id' => $this->getRefContent()) ), VINCULUM_ERROR_REMOTE_URL_MISSING_LINK );
+      throw new LinkbackException(t('No link found in source url referencing content with id %id', array('%id' => $this->getRefContent()) ), VINCULUM_ERROR_REMOTE_URL_MISSING_LINK );
     }
     else{
       return $title_excerpt;
@@ -387,14 +387,14 @@ class VinculumReceived extends ContentEntityBase implements VinculumReceivedInte
       // Save the entity.
       // Entity presave/update/insert hooks will be invoked by the entity API
       // controller.
-      // @see hook_vinculum_received_presave()
-      // @see hook_vinculum_received_insert()
-      // @see hook_vinculum_received_update()
-      \Drupal::logger('vinculum')->notice("Tempted vinculum could be registered");
+      // @see hook_linkback_received_presave()
+      // @see hook_linkback_received_insert()
+      // @see hook_linkback_received_update()
+      \Drupal::logger('linkback')->notice("Tempted linkback could be registered");
     }else{
       if ($this->validate()->getByFields(['handler'])->count() == 1){
-        \Drupal::logger('vinculum')->error("The refback-handler must be provided.");
-        throw new VinculumException('The refback-handler must be provided.');
+        \Drupal::logger('linkback')->error("The refback-handler must be provided.");
+        throw new LinkbackException('The refback-handler must be provided.');
       }
       if ($this->validate()->getByFields(['title'])->count() == 1 || $this->validate()->getByFields(['excerpt'])->count() == 1 ){
         try {
@@ -409,14 +409,14 @@ class VinculumReceived extends ContentEntityBase implements VinculumReceivedInte
  
         }
         catch (Exception $exception){
-          throw new VinculumException($exception->getMessage(), $exception->getCode());
+          throw new LinkbackException($exception->getMessage(), $exception->getCode());
         }
       }
       if ($this->validate()->getEntityViolations()->count() > 0 ){
          //COND FOR VINCULUM_ERROR_REFBACK_ALREADY_REGISTERED
          //AND COND FOR VINCULUM_ERROR_LOCAL_NODE_REFBACK_NOT_ALLOWED
          $violation = $this->validate()->getEntityViolations()[0];
-         throw new VinculumException($violation->getCause(), $violation->getCode());
+         throw new LinkbackException($violation->getCause(), $violation->getCode());
       }
 
        

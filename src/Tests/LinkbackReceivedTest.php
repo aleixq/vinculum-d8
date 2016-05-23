@@ -1,43 +1,43 @@
 <?php
 /**
  * @file
- * Unit tests for the VinculumReceived Entity.
+ * Unit tests for the LinkbackReceived Entity.
  *
  * Intro: https://api.drupal.org/api/drupal/core!core.api.php/group/testing/8.
  */
 /**
  * @file
- * Contains \Drupal\Tests\vinculum\Kernel\VinculumReceivedTest.
+ * Contains \Drupal\Tests\linkback\Kernel\LinkbackReceivedTest.
  */
-namespace Drupal\vinculum\Tests;
+namespace Drupal\linkback\Tests;
 
 use Drupal\simpletest\WebTestBase;
 use Drupal\simpletest\KernelTestBase;
-use \Drupal\vinculum\Entity\VinculumReceived;
+use \Drupal\linkback\Entity\LinkbackReceived;
 use Drupal\Core\Url;
 
 /**
- * @coversDefaultClass \Drupal\vinculum\Entity\VinculumReceived
- * @group vinculum
+ * @coversDefaultClass \Drupal\linkback\Entity\LinkbackReceived
+ * @group linkback
  */
-class VinculumReceivedTest extends WebTestBase {
+class LinkbackReceivedTest extends WebTestBase {
   /**
    * Modules to enable.
    *
    * @var array
    */
-  public static $modules = ['node', 'entity_reference', 'vinculum', 'vinculum_pingback', 'file', 'system'];
+  public static $modules = ['node', 'entity_reference', 'linkback', 'linkback_pingback', 'file', 'system'];
   /**
    * {@inheritDoc}.
    */
   protected function setUp() {
     parent::setUp();
-//    $this->installEntitySchema('vinculum');
+//    $this->installEntitySchema('linkback');
   }
   /**
-   * Saves an vinculum & make sure values are properly set.
+   * Saves an linkback & make sure values are properly set.
    */
-  public function testSaveVinculumReceived() {
+  public function testSaveLinkbackReceived() {
     /*
     // Create a node with our user as the creator.
     // drupalCreateNode() uses the logged-in user by default.
@@ -47,14 +47,14 @@ class VinculumReceivedTest extends WebTestBase {
     );
     $node = $this->drupalCreateNode($settings);
     
-    //TODO ADD NODE  with vinculum field and get urls
+    //TODO ADD NODE  with linkback field and get urls
     $source_uri = "http://planet8.sb.communia.org/content/qonfluo-el-software-de-streaming-de-communia";
     $target = "http://planet8.sb.communia.org/content/curs-3d-printing";
     //$ref_content = Url::fromUserInput(str_replace($base_url, "", $target ) )->getRouteParameters()['node']; 
     $ref_content = $node->id;
     // Create an entity.
-  $entity = VinculumReceived::create([
-    'handler'  => 'vinculum_pingback',
+  $entity = LinkbackReceived::create([
+    'handler'  => 'linkback_pingback',
     'ref_content' => $ref_content,
     'url'      => $source_uri,
   ]);
@@ -66,23 +66,23 @@ class VinculumReceivedTest extends WebTestBase {
     // Get the id.
     $id = $entity->id();
     // Load the saved entity.
-    $saved_entity = VinculumReceived::load($id);
+    $saved_entity = LinkbackReceived::load($id);
     // Check label.
     $this->assertEqual($label, $saved_entity->label(), 'Label created successfully', 'label');
     */
   }
   /**
-   * Saves an vinculum & makes sure the uuid is set.
+   * Saves an linkback & makes sure the uuid is set.
    */
-  public function testVinculumReceivedUuid() {
+  public function testLinkbackReceivedUuid() {
     /* TODO
     $source_uri = "";
     $target = "";
     global $base_url;
     $ref_content = Url::fromUserInput(str_replace($base_url, "", $target ) )->getRouteParameters()['node']; 
     // Create an entity.
-  $entity = VinculumReceived::create([
-    'handler'  => 'vinculum_pingback',
+  $entity = LinkbackReceived::create([
+    'handler'  => 'linkback_pingback',
     'ref_content' => $ref_content,
     'url'      => $source_uri,
   ]);
@@ -104,7 +104,7 @@ class VinculumReceivedTest extends WebTestBase {
     // Get the id.
     $id = $entity->id();
     // Load the saved entity.
-    $saved_entity = VinculumReceived::load($id);
+    $saved_entity = LinkbackReceived::load($id);
     // Check UUID.
     $this->assertEqual($uuid, $saved_entity->uuid(), 'UUID created successfully', 'uuid');
     // Check the string length of uuid is 36.

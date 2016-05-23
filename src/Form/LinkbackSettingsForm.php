@@ -1,24 +1,24 @@
 <?php
 
-namespace Drupal\vinculum\Form;
+namespace Drupal\linkback\Form;
 
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Link;
 use Drupal\Core\Url;
 /**
- * Class VinculumSettingsForm.
+ * Class LinkbackSettingsForm.
  *
- * @package Drupal\vinculum\Form
+ * @package Drupal\linkback\Form
  */
-class VinculumSettingsForm extends ConfigFormBase {
+class LinkbackSettingsForm extends ConfigFormBase {
 
   /**
    * {@inheritdoc}
    */
   protected function getEditableConfigNames() {
     return [
-      'vinculum.settings',
+      'linkback.settings',
     ];
   }
 
@@ -26,18 +26,18 @@ class VinculumSettingsForm extends ConfigFormBase {
    * {@inheritdoc}
    */
   public function getFormId() {
-    return 'vinculum_settings_form';
+    return 'linkback_settings_form';
   }
 
   /**
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
-    $config = $this->config('vinculum.settings');
+    $config = $this->config('linkback.settings');
     $form['use_cron'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Use cron'),
-      '#description' => $this->t('Use cron to process the sending of vinculums.') ,
+      '#description' => $this->t('Use cron to process the sending of linkbacks.') ,
       '#default_value' => $config->get('use_cron'),
     ];
 
@@ -49,13 +49,13 @@ class VinculumSettingsForm extends ConfigFormBase {
    * {@inheritdoc}
    */
   public function validateForm(array &$form, FormStateInterface $form_state) {
-    $config = $this->config('vinculum.settings');
+    $config = $this->config('linkback.settings');
     parent::validateForm($form, $form_state);
     //TODO CHECK IF IT CAN BE CHANGED (no items in queue!!!);(provide link to process queue.
     /** @var QueueFactory $queue_factory */
     $queue_factory = \Drupal::service('queue');
     /** @var QueueInterface $queue */
-    $queue = $queue_factory->get($config->get('use_cron') ? 'cron_vinculum_sender' : 'manual_vinculum_sender' );
+    $queue = $queue_factory->get($config->get('use_cron') ? 'cron_linkback_sender' : 'manual_linkback_sender' );
     if ($queue->numberOfItems() > 0){
       $form_state->setErrorByName('use_cron', t('Could not change this options as @qitems items remain in queue, run or remove these in queue tab', array('@qitems' => $queue->numberOfItems())) );
     }
@@ -68,7 +68,7 @@ class VinculumSettingsForm extends ConfigFormBase {
   public function submitForm(array &$form, FormStateInterface $form_state) {
     parent::submitForm($form, $form_state);
 
-    $this->config('vinculum.settings')
+    $this->config('linkback.settings')
       ->set('use_cron', $form_state->getValue('use_cron'))
       ->save();
   }

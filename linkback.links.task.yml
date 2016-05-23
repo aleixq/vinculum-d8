@@ -1,0 +1,13 @@
+linkback.settings: # The first plugin ID
+  title: 'Settings'
+  route_name: linkback.settings
+  base_route: linkback.settings
+linkback.queue:
+  title: 'Sending Queue'
+  route_name: linkback.queue
+  description: 'Linkback sending queue'
+  base_route: linkback.settings
+linkback.received:
+  title: 'Received'
+  route_name: linkback.received_linkbacks
+  base_route: linkback.settings

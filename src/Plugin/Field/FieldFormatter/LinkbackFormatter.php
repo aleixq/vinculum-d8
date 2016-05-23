@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\vinculum\Plugin\Field\FieldFormatter;
+namespace Drupal\linkback\Plugin\Field\FieldFormatter;
 
 use Drupal\Component\Utility\Html;
 use Drupal\Core\Field\FieldItemInterface;
@@ -9,17 +9,17 @@ use Drupal\Core\Field\FormatterBase;
 use Drupal\Core\Form\FormStateInterface;
 
 /**
- * Plugin implementation of the 'vinculum_formatter' formatter.
+ * Plugin implementation of the 'linkback_formatter' formatter.
  *
  * @FieldFormatter(
- *   id = "vinculum_formatter",
- *   label = @Translation("Vinculum formatter"),
+ *   id = "linkback_formatter",
+ *   label = @Translation("Linkback formatter"),
  *   field_types = {
- *     "vinculum_handlers"
+ *     "linkback_handlers"
  *   }
  * )
  */
-class VinculumFormatter extends FormatterBase {
+class LinkbackFormatter extends FormatterBase {
 
   /**
    * {@inheritdoc}
@@ -73,8 +73,8 @@ class VinculumFormatter extends FormatterBase {
    *   The textual output generated.
    */
   protected function viewValue(FieldItemInterface $item) {
-      $send = ($item->vinculum_send) ? $this->t('Send vinculums option is enabled') : $this->t('Send vinculums option is disabled');
-      $receive = ($item->vinculum_receive) ? $this->t('Receive vinculums option is enabled') : $this->t('Receive vinculums option is disabled');
+      $send = ($item->linkback_send) ? $this->t('Send linkbacks option is enabled') : $this->t('Send linkbacks option is disabled');
+      $receive = ($item->linkback_receive) ? $this->t('Receive linkbacks option is enabled') : $this->t('Receive linkbacks option is disabled');
       return $send . "<br/>" . $receive;
   }
 

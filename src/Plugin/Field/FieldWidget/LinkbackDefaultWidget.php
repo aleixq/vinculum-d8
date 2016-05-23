@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\vinculum\Plugin\Field\FieldWidget;
+namespace Drupal\linkback\Plugin\Field\FieldWidget;
 
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Config\ConfigFactoryInterface;
@@ -12,17 +12,17 @@ use Drupal\Core\Form\FormStateInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Plugin implementation of the 'vinculum_default_widget' widget.
+ * Plugin implementation of the 'linkback_default_widget' widget.
  *
  * @FieldWidget(
- *   id = "vinculum_default_widget",
- *   label = @Translation("Vinculum default widget"),
+ *   id = "linkback_default_widget",
+ *   label = @Translation("Linkback default widget"),
  *   field_types = {
- *     "vinculum_handlers"
+ *     "linkback_handlers"
  *   }
  * )
  */
-class VinculumDefaultWidget extends WidgetBase implements ContainerFactoryPluginInterface {
+class LinkbackDefaultWidget extends WidgetBase implements ContainerFactoryPluginInterface {
   /**
    * The current user.
    *
@@ -54,7 +54,7 @@ class VinculumDefaultWidget extends WidgetBase implements ContainerFactoryPlugin
   /**
    * {@inheritdoc}
    */
-  //TODO allow extra vinculums methods here.
+  //TODO allow extra linkbacks methods here.
   public function settingsForm(array $form, FormStateInterface $form_state) {
     $elements = [];
     return $elements;
@@ -63,7 +63,7 @@ class VinculumDefaultWidget extends WidgetBase implements ContainerFactoryPlugin
   /**
    * {@inheritdoc}
    */
-  //TODO allow extra vinculums methods here.
+  //TODO allow extra linkbacks methods here.
   public function settingsSummary() {
     $summary = [];
     return $summary;
@@ -74,17 +74,17 @@ class VinculumDefaultWidget extends WidgetBase implements ContainerFactoryPlugin
   public function formElement(FieldItemListInterface $items, $delta, array $element, array &$form, FormStateInterface $form_state) {
     $element = [];
 
-    $elements['vinculum_send'] = array(
+    $elements['linkback_send'] = array(
       '#type' => 'checkbox',
-      '#title' => t('Send vinculums'),
-      '#default_value' => isset($items->vinculum_send) ? $items->vinculum_send : TRUE,
-      '#access' => $this->currentUser->hasPermission('toggle vinculum send option on content'),
+      '#title' => t('Send linkbacks'),
+      '#default_value' => isset($items->linkback_send) ? $items->linkback_send : TRUE,
+      '#access' => $this->currentUser->hasPermission('toggle linkback send option on content'),
     );
-    $elements['vinculum_receive'] = array(
+    $elements['linkback_receive'] = array(
       '#type' => 'checkbox',
-      '#title' => t('Receive vinculums'),
-      '#default_value' => isset($items->vinculum_receive) ? $items->vinculum_receive : TRUE,
-      '#access' => $this->currentUser->hasPermission('toggle vinculum receive option on content'),
+      '#title' => t('Receive linkbacks'),
+      '#default_value' => isset($items->linkback_receive) ? $items->linkback_receive : TRUE,
+      '#access' => $this->currentUser->hasPermission('toggle linkback receive option on content'),
     );
     // If the advanced settings tabs-set is available (normally rendered in the
     // second column on wide-resolutions), place the field as a details element

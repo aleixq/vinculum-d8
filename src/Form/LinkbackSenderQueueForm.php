@@ -1,10 +1,10 @@
 <?php 
 /**
  * @file
- * Contains \Drupal\vinculum\Form\VinculumSenderQueueForm.
+ * Contains \Drupal\linkback\Form\LinkbackSenderQueueForm.
  */
 
-namespace Drupal\vinculum\Form;
+namespace Drupal\linkback\Form;
 
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
@@ -17,7 +17,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\Core\Config\ConfigFactoryInterface;
 
 
-class VinculumSenderQueueForm extends FormBase {
+class LinkbackSenderQueueForm extends FormBase {
 
   /**
    * @var QueueFactory
@@ -61,15 +61,15 @@ class VinculumSenderQueueForm extends FormBase {
    * @return string the name of the QueueFactory
    */
    protected function getQueue(){
-     $config = $this->configFactory->get('vinculum.settings');
-     return $config->get('use_cron')? 'cron_vinculum_sender' : 'manual_vinculum_sender';
+     $config = $this->configFactory->get('linkback.settings');
+     return $config->get('use_cron')? 'cron_linkback_sender' : 'manual_linkback_sender';
    }
   
   /**
    * {@inheritdoc}.
    */
   public function getFormId() {
-    return 'vinculum_sender_queue_form';
+    return 'linkback_sender_queue_form';
   }
   
   /**
@@ -132,7 +132,7 @@ class VinculumSenderQueueForm extends FormBase {
         break;
       }
       catch (\Exception $e) {
-        watchdog_exception('vinculum', $e);
+        watchdog_exception('linkback', $e);
       }
     }
   }

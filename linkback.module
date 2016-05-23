@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Contains vinculum.module..
+ * Contains linkback.module..
  */
 
 use Drupal\Core\Routing\RouteMatchInterface;
@@ -13,7 +13,7 @@ use Symfony\Component\DomCrawler\Crawler;
 
 
 // User-agent used when extracting titles and excerpts.
-define('VINCULUM_UA', 'Drupal Refback (+http://drupal.org/project/vinculum)');
+define('VINCULUM_UA', 'Drupal Refback (+http://drupal.org/project/linkback)');
 
 // The local node could not be found.
 define('VINCULUM_ERROR_LOCAL_NODE_NOT_FOUND', 1);
@@ -32,13 +32,13 @@ define('VINCULUM_ERROR_REMOTE_URL_MISSING_LINK', 4);
 /**
  * Implements hook_help().
  */
-function vinculum_help($route_name, RouteMatchInterface $route_match) {
+function linkback_help($route_name, RouteMatchInterface $route_match) {
   switch ($route_name) {
-    // Main module help for the vinculum module.
-    case 'help.page.vinculum':
+    // Main module help for the linkback module.
+    case 'help.page.linkback':
       $output = '';
       $output .= '<h3>' . t('About') . '</h3>';
-      $output .= '<p>' . t('vinculum raw functionality') . '</p>';
+      $output .= '<p>' . t('linkback raw functionality') . '</p>';
       return $output;
 
     default:
@@ -49,9 +49,9 @@ function vinculum_help($route_name, RouteMatchInterface $route_match) {
 /*
  * Implements hook_ENTITY_TYPE_insert().
  */
-function vinculum_entity_insert(Drupal\Core\Entity\EntityInterface $entity)
+function linkback_entity_insert(Drupal\Core\Entity\EntityInterface $entity)
 {
-  //TODO allow other entities to use vinculums
+  //TODO allow other entities to use linkbacks
   if ($entity->getEntityTypeId() != 'node') {
     return;
   }
@@ -62,7 +62,7 @@ function vinculum_entity_insert(Drupal\Core\Entity\EntityInterface $entity)
   /** @var QueueFactory $queue_factory */
   $queue_factory = \Drupal::service('queue');
   /** @var QueueInterface $queue */
-  $queue = $queue_factory->get(\Drupal::config('vinculum.settings')->get('use_cron')? 'cron_vinculum_sender' : 'manual_vinculum_sender');
+  $queue = $queue_factory->get(\Drupal::config('linkback.settings')->get('use_cron')? 'cron_linkback_sender' : 'manual_linkback_sender');
   $item = new \stdClass();
   $item->nid = $entity->id();
   $queue->createItem($entity);
@@ -72,7 +72,7 @@ function vinculum_entity_insert(Drupal\Core\Entity\EntityInterface $entity)
 /*
  * Implements hook_ENTITY_TYPE_update().
  */
-function vinculum_entity_update(Drupal\Core\Entity\EntityInterface $entity){
-  vinculum_entity_insert($entity);
+function linkback_entity_update(Drupal\Core\Entity\EntityInterface $entity){
+  linkback_entity_insert($entity);
 }
 

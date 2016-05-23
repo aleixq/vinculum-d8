@@ -1,0 +1,35 @@
+linkback.queue:
+  path: '/admin/linkback/queue'
+  defaults:
+    _form: '\Drupal\linkback\Form\LinkbackSenderQueueForm'
+    _title: 'Linkback sender'
+  requirements:
+    _permission: 'administer linkback'
+linkback.settings:
+  path: '/admin/linkback'
+  defaults:
+    _form: '\Drupal\linkback\Form\LinkbackSettingsForm'
+    _title: 'Linkback'
+  requirements:
+    _permission: 'administer linkback'
+linkback.received_linkbacks:
+  path: '/admin/linkback/received'
+  defaults:
+    _title: 'Received linkbacks'
+    _entity_list: 'linkback_received'
+  requirements:
+    _permission: 'administer linkback'
+entity.linkback_received.canonical:
+  path: '/linkback/{linkback_received}'
+  defaults:
+    _entity_view: 'linkback_received'
+    _title: 'Received Linkback'
+  requirements:
+    _entity_access: 'linkback_received.view'
+entity.linkback_received.delete_form:
+  path: '/linkback/{linkback_received}/delete'
+  defaults:
+    _title: 'Delete'
+    _entity_form: 'linkback_received.delete'
+  requirements:
+    _entity_access: 'linkback_received.delete'

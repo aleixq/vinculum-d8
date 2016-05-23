@@ -1,13 +1,13 @@
 <?php
 /**
  * @file
- * Contains Drupal\vinculum\Plugin\QueueWorker\VinculumSender.php
+ * Contains Drupal\linkback\Plugin\QueueWorker\LinkbackSender.php
  */
 
-namespace Drupal\vinculum\Plugin\QueueWorker;
+namespace Drupal\linkback\Plugin\QueueWorker;
 
 
-use Drupal\vinculum\Exception\VinculumException;
+use Drupal\linkback\Exception\LinkbackException;
 use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Entity\EntityFieldManagerInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
@@ -17,13 +17,13 @@ use Drupal\Core\Url;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\DomCrawler\Crawler;
 use Drupal\Component\EventDispatcher\ContainerAwareEventDispatcher;
-use Drupal\vinculum\Event\VinculumSendEvent;
-use Drupal\vinculum\Event\VinculumSendRulesEvent;
+use Drupal\linkback\Event\LinkbackSendEvent;
+use Drupal\linkback\Event\LinkbackSendRulesEvent;
 
 /**
- * Provides base functionality for the VinculumSender Queue Workers.
+ * Provides base functionality for the LinkbackSender Queue Workers.
  */
-abstract class VinculumSender extends QueueWorkerBase implements ContainerFactoryPluginInterface {
+abstract class LinkbackSender extends QueueWorkerBase implements ContainerFactoryPluginInterface {
 
   /**
    * The entity type manager.
@@ -47,7 +47,7 @@ abstract class VinculumSender extends QueueWorkerBase implements ContainerFactor
    protected $eventDispatcher;
 
   /**
-   * Creates a new VinculumSender object.
+   * Creates a new LinkbackSender object.
    *
    * @param \Drupal/Core/Entity/EntityFieldManagerInterface $field_manager
    *   Entity Field Manager.
@@ -81,14 +81,14 @@ abstract class VinculumSender extends QueueWorkerBase implements ContainerFactor
     $content = FALSE;
     $send_allowed = TRUE;
 
-    $field_type = $this->fieldManager->getFieldMapByFieldType('vinculum_handlers');
+    $field_type = $this->fieldManager->getFieldMapByFieldType('linkback_handlers');
     foreach ($field_type as $entity_type_id => $field){
       $storage = $this->entityTypeManager->getStorage($entity_type_id);
       $content = $storage->load( $data->id() );
       if ($content){
         $field_name = array_keys($field)[0];
-        $field_send_allowed = $content->get($field_name)->vinculum_send;
-        $default = $content->get($field_name)->getFieldDefinition()->getDefaultValueLiteral()[0]['vinculum_send'];
+        $field_send_allowed = $content->get($field_name)->linkback_send;
+        $default = $content->get($field_name)->getFieldDefinition()->getDefaultValueLiteral()[0]['linkback_send'];
         $send_allowed = (isset( $field_send_allowed)) ? $field_send_allowed : $default ;
         break;
       }
@@ -100,17 +100,17 @@ abstract class VinculumSender extends QueueWorkerBase implements ContainerFactor
       return;
     }
     //SEND VINCULUMS VIA EVENT SUBSCRIBER
-    //TODO allow other type of fields than body to be scanned to send vinculums.
+    //TODO allow other type of fields than body to be scanned to send linkbacks.
     /** @var $urls string[] **/ 
     $urls = $this->getBodyUrls($content->get('body')->value);
 
     foreach ($urls as $target_url){
       $target_url = Url::fromUri($target_url);
       //TODO: Add batch process as in https://api.drupal.org/api/drupal/core%21modules%21locale%21src%21Plugin%21QueueWorker%21LocaleTranslation.php/function/LocaleTranslation%3A%3AprocessItem/8.2.x
-      $event = new VinculumSendEvent($content->toUrl('canonical', ['absolute' => TRUE ] ), $target_url);
-      $this->eventDispatcher->dispatch(VinculumSendEvent::EVENT_NAME, $event);
-      $event = new VinculumSendRulesEvent($content, $target_url->setOption('absolute', TRUE)->toString() );
-      $this->eventDispatcher->dispatch(VinculumSendRulesEvent::EVENT_NAME, $event);
+      $event = new LinkbackSendEvent($content->toUrl('canonical', ['absolute' => TRUE ] ), $target_url);
+      $this->eventDispatcher->dispatch(LinkbackSendEvent::EVENT_NAME, $event);
+      $event = new LinkbackSendRulesEvent($content, $target_url->setOption('absolute', TRUE)->toString() );
+      $this->eventDispatcher->dispatch(LinkbackSendRulesEvent::EVENT_NAME, $event);
     }
 
   }

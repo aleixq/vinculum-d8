@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\vinculum\Plugin\Field\FieldType;
+namespace Drupal\linkback\Plugin\Field\FieldType;
 
 use Drupal\Component\Utility\Random;
 use Drupal\Core\Field\FieldDefinitionInterface;
@@ -11,26 +11,26 @@ use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\Core\TypedData\DataDefinition;
 
 /**
- * Plugin implementation of the 'vinculum_handlers' field type.
+ * Plugin implementation of the 'linkback_handlers' field type.
  *
  * @FieldType(
- *   id = "vinculum_handlers",
- *   label = @Translation("Vinculum handlers"),
- *   description = @Translation("This field stores vinculum enabled handlers"),
- *   default_widget = "vinculum_default_widget",
- *   default_formatter = "vinculum_formatter"
+ *   id = "linkback_handlers",
+ *   label = @Translation("Linkback handlers"),
+ *   description = @Translation("This field stores linkback enabled handlers"),
+ *   default_widget = "linkback_default_widget",
+ *   default_formatter = "linkback_formatter"
  * )
  */
-class VinculumHandlerItem extends FieldItemBase {
+class LinkbackHandlerItem extends FieldItemBase {
   /**
    * {@inheritdoc}
    */
   public static function propertyDefinitions(FieldStorageDefinitionInterface $field_definition) {
     // Prevent early t() calls by using the TranslatableMarkup.
-    $properties['vinculum_receive'] = DataDefinition::create('integer')
-      ->setLabel(new TranslatableMarkup('Receive vinculums'));
-    $properties['vinculum_send'] = DataDefinition::create('integer')
-      ->setLabel(new TranslatableMarkup('Send vinculums'));
+    $properties['linkback_receive'] = DataDefinition::create('integer')
+      ->setLabel(new TranslatableMarkup('Receive linkbacks'));
+    $properties['linkback_send'] = DataDefinition::create('integer')
+      ->setLabel(new TranslatableMarkup('Send linkbacks'));
 
     return $properties;
   }
@@ -41,11 +41,11 @@ class VinculumHandlerItem extends FieldItemBase {
   public static function schema(FieldStorageDefinitionInterface $field_definition) {
     $schema = array(
       'columns' => array(
-        'vinculum_receive' => array(
+        'linkback_receive' => array(
           'type' => 'int',
           'size' => 'tiny',
         ),
-        'vinculum_send' => array(
+        'linkback_send' => array(
           'type' => 'int',
           'size' => 'tiny',
         ),
@@ -59,7 +59,7 @@ class VinculumHandlerItem extends FieldItemBase {
    * {@inheritdoc}
    */
   public function isEmpty() {
-    $value = $this->get('vinculum_send')->getValue();
+    $value = $this->get('linkback_send')->getValue();
     return $value === NULL || $value === '';
   }
 

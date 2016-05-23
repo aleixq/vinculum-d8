@@ -1,20 +1,20 @@
 <?php
 
-namespace Drupal\vinculum\Form;
+namespace Drupal\linkback\Form;
 
 use Drupal\Core\Entity\ContentEntityDeleteForm;
 use Drupal\Core\Url;
 
 /**
- * Provides a form for deleting a vinculum.
+ * Provides a form for deleting a linkback.
  */
-class VinculumReceivedDeleteForm extends ContentEntityDeleteForm {
+class LinkbackReceivedDeleteForm extends ContentEntityDeleteForm {
 
   /**
    * {@inheritdoc}
    */
   public function getCancelUrl() {
-    return new Url('vinculum.queue');
+    return new Url('linkback.queue');
   }
 
   /**
@@ -28,7 +28,7 @@ class VinculumReceivedDeleteForm extends ContentEntityDeleteForm {
    * {@inheritdoc}
    */
   protected function getDeletionMessage() {
-    return $this->t('The vinculum %label has been deleted.', array(
+    return $this->t('The linkback %label has been deleted.', array(
       '%label' => $this->entity->label(),
     ));
   }

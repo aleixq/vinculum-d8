@@ -1,16 +1,16 @@
 <?php
 
-namespace Drupal\vinculum;
+namespace Drupal\linkback;
 
 use Drupal\Core\Entity\EntityListBuilder;
 use Drupal\Core\Entity\EntityInterface;
 
 /**
- * Defines a class to build a listing of vinculum_received entities.
+ * Defines a class to build a listing of linkback_received entities.
  *
- * @see \Drupal\vinculum\Entity\Vinculum
+ * @see \Drupal\linkback\Entity\Linkback
  */
-class VinculumListBuilder extends EntityListBuilder {
+class LinkbackListBuilder extends EntityListBuilder {
 
   /**
    * {@inheritdoc}

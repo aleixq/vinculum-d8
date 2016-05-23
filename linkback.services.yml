@@ -1,5 +1,5 @@
 services:
-  logger.channel.vinculum:
+  logger.channel.linkback:
     class: Drupal\Core\Logger\LoggerChannel
     factory: logger.factory:get
-    arguments: ['vinculum']
+    arguments: ['linkback']

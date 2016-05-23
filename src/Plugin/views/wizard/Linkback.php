@@ -1,6 +1,6 @@
 <?php 
 
-namespace Drupal\vinculum\Plugin\views\wizard;
+namespace Drupal\linkback\Plugin\views\wizard;
 
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\views\Plugin\views\wizard\WizardPluginBase;
@@ -9,10 +9,10 @@ use Drupal\views\Plugin\views\wizard\WizardPluginBase;
  * Provides a views wizard for My Entity entities.
  *
  * @ViewsWizard(
- *   id = "vinculum",
- *   base_table = "vinculum_received",
- *   title = @Translation("Vinculum")
+ *   id = "linkback",
+ *   base_table = "linkback_received",
+ *   title = @Translation("Linkback")
  * )
  */
-class Vinculum extends WizardPluginBase {
+class Linkback extends WizardPluginBase {
 }

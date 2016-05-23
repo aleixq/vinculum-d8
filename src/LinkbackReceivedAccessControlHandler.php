@@ -1,10 +1,10 @@
 <?php
 /**
  * @file
- * Contains \Drupal\vinculum\VinculumReceivedAccessControlHandler.
+ * Contains \Drupal\linkback\LinkbackReceivedAccessControlHandler.
  */
 
-namespace Drupal\vinculum;
+namespace Drupal\linkback;
 
 use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Entity\EntityAccessControlHandler;
@@ -12,11 +12,11 @@ use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Session\AccountInterface;
 
 /**
- * Defines an access control handler for the vinculum received entity.
+ * Defines an access control handler for the linkback received entity.
  *
- * @see \Drupal\vinculum\Entity\VinculumReceived
+ * @see \Drupal\linkback\Entity\LinkbackReceived
  */
-class VinculumReceivedAccessControlHandler extends EntityAccessControlHandler {
+class LinkbackReceivedAccessControlHandler extends EntityAccessControlHandler {
 
   /**
    * {@inheritdoc}
@@ -24,11 +24,11 @@ class VinculumReceivedAccessControlHandler extends EntityAccessControlHandler {
   protected function checkAccess(EntityInterface $entity, $operation, AccountInterface $account) {
     switch ($operation) {
       case 'view':
-        return AccessResult::allowedIfHasPermission($account, 'access vinculums');
+        return AccessResult::allowedIfHasPermission($account, 'access linkbacks');
         break;
 
       default:
-        return AccessResult::allowedIfHasPermission($account, 'administer vinculum');
+        return AccessResult::allowedIfHasPermission($account, 'administer linkback');
         break;
     }
   }
@@ -37,7 +37,7 @@ class VinculumReceivedAccessControlHandler extends EntityAccessControlHandler {
    * {@inheritdoc}
    */
   protected function checkCreateAccess(AccountInterface $account, array $context, $entity_bundle = NULL) {
-    return AccessResult::allowedIfHasPermission($account, 'administer vinculum');
+    return AccessResult::allowedIfHasPermission($account, 'administer linkback');
   }
 
 }

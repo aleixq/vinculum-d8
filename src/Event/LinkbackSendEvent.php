@@ -1,16 +1,16 @@
 <?php 
-namespace Drupal\vinculum\Event;
+namespace Drupal\linkback\Event;
 
 use Symfony\Component\EventDispatcher\Event;
 use Drupal\Core\Url;
 /**
- * Event that is fired when a vinculum needs to be send.
+ * Event that is fired when a linkback needs to be send.
  *
- * @see vinculum_send()
+ * @see linkback_send()
  */
-class VinculumSendEvent extends Event {
+class LinkbackSendEvent extends Event {
 
-  const EVENT_NAME = 'vinculum_send';
+  const EVENT_NAME = 'linkback_send';
 
   /**
    * The source url.
