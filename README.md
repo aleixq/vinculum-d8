@@ -1,7 +1,7 @@
 # linkback-d8
 Linkback rebuilt to work with Drupal 8.
 This module is the backend to store received linkbacks and to fire Events to be used by Rules or by handler modules.
-So without these modules it's not very useful. You can see a working handler module in linkback-d8-pingback ( https://github.com/aleixq/linkback-d8_pingback ).
+So without these modules it's not very useful. You can see a working handler module in linkback-d8-pingback ( https://github.com/aleixq/vinculum-d8_pingback ).
 #Install
 Install and go to Configure > services > linkbacks. From there you can configure how sending linkbacks must work: if using cron or if using manual process. There is also lso you can see there the list of received linkbacks.
 # Changes over linkback-d7
