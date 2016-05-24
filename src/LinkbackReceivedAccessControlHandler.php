@@ -25,11 +25,12 @@ class LinkbackReceivedAccessControlHandler extends EntityAccessControlHandler {
     switch ($operation) {
       case 'view':
         return AccessResult::allowedIfHasPermission($account, 'access linkbacks');
-        break;
+
+      break;
 
       default:
         return AccessResult::allowedIfHasPermission($account, 'administer linkback');
-        break;
+      break;
     }
   }
 

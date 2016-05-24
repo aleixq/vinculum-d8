@@ -1,4 +1,4 @@
-<?php 
+<?php
 namespace Drupal\linkback\Plugin\QueueWorker;
 
 /**
@@ -10,4 +10,3 @@ namespace Drupal\linkback\Plugin\QueueWorker;
  * )
  */
 class ManualLinkbackSender extends LinkbackSender {}
-

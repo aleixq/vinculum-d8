@@ -32,7 +32,6 @@ class LinkbackListBuilder extends EntityListBuilder {
     return $header + parent::buildHeader();
   }
 
-
   /**
    * {@inheritdoc}
    */
@@ -47,4 +46,5 @@ class LinkbackListBuilder extends EntityListBuilder {
     $row['date'] = $entity->getCreatedTime();
     return $row + parent::buildRow($entity);
   }
+
 }

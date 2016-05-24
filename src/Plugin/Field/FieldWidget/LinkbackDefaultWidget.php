@@ -34,7 +34,7 @@ class LinkbackDefaultWidget extends WidgetBase implements ContainerFactoryPlugin
    * {@inheritdoc}
    */
   public function __construct($plugin_id, $plugin_definition, FieldDefinitionInterface $field_definition, array $settings, AccountInterface $current_user) {
-   parent::__construct($plugin_id, $plugin_definition, $field_definition, $settings, array());
+    parent::__construct($plugin_id, $plugin_definition, $field_definition, $settings, array());
     $this->currentUser = $current_user;
   }
 
@@ -54,7 +54,10 @@ class LinkbackDefaultWidget extends WidgetBase implements ContainerFactoryPlugin
   /**
    * {@inheritdoc}
    */
-  //TODO allow extra linkbacks methods here.
+
+  /**
+   * TODO allow extra linkbacks methods here.
+   */
   public function settingsForm(array $form, FormStateInterface $form_state) {
     $elements = [];
     return $elements;
@@ -63,11 +66,15 @@ class LinkbackDefaultWidget extends WidgetBase implements ContainerFactoryPlugin
   /**
    * {@inheritdoc}
    */
-  //TODO allow extra linkbacks methods here.
+
+  /**
+   * TODO allow extra linkbacks methods here.
+   */
   public function settingsSummary() {
     $summary = [];
     return $summary;
   }
+
   /**
    * {@inheritdoc}
    */

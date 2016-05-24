@@ -41,7 +41,6 @@ class LinkbackSettingsForm extends ConfigFormBase {
       '#default_value' => $config->get('use_cron'),
     ];
 
-     
     return parent::buildForm($form, $form_state);
   }
 
@@ -51,15 +50,15 @@ class LinkbackSettingsForm extends ConfigFormBase {
   public function validateForm(array &$form, FormStateInterface $form_state) {
     $config = $this->config('linkback.settings');
     parent::validateForm($form, $form_state);
-    //TODO CHECK IF IT CAN BE CHANGED (no items in queue!!!);(provide link to process queue.
+    // TODO CHECK IF IT CAN BE CHANGED (no items in queue!!!);(provide link to process queue.
     /** @var QueueFactory $queue_factory */
     $queue_factory = \Drupal::service('queue');
     /** @var QueueInterface $queue */
-    $queue = $queue_factory->get($config->get('use_cron') ? 'cron_linkback_sender' : 'manual_linkback_sender' );
-    if ($queue->numberOfItems() > 0){
-      $form_state->setErrorByName('use_cron', t('Could not change this options as @qitems items remain in queue, run or remove these in queue tab', array('@qitems' => $queue->numberOfItems())) );
+    $queue = $queue_factory->get($config->get('use_cron') ? 'cron_linkback_sender' : 'manual_linkback_sender');
+    if ($queue->numberOfItems() > 0) {
+      $form_state->setErrorByName('use_cron', t('Could not change this options as @qitems items remain in queue, run or remove these in queue tab', array('@qitems' => $queue->numberOfItems())));
     }
-    
+
   }
 
   /**

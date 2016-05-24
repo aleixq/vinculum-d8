@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace Drupal\linkback\Plugin\views\wizard;
 

@@ -22,6 +22,7 @@ use Drupal\Core\TypedData\DataDefinition;
  * )
  */
 class LinkbackHandlerItem extends FieldItemBase {
+
   /**
    * {@inheritdoc}
    */

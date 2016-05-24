@@ -24,7 +24,10 @@ class LinkbackFormatter extends FormatterBase {
   /**
    * {@inheritdoc}
    */
-   //TODO ALLOW OTHER VINCULUMS HANDLERS
+
+  /**
+   * TODO ALLOW OTHER LINKBACKS HANDLERS.
+   */
   public static function defaultSettings() {
     return array(
       // Implement default settings.
@@ -46,7 +49,6 @@ class LinkbackFormatter extends FormatterBase {
   public function settingsSummary() {
     $summary = [];
     // Implement settings summary.
-
     return $summary;
   }
 
@@ -55,7 +57,7 @@ class LinkbackFormatter extends FormatterBase {
    */
   public function viewElements(FieldItemListInterface $items, $langcode) {
     $elements = [];
-    //TODO CALL MODULE_IMPLEMENT INVOKE_ALL HOOKS!
+    // TODO CALL MODULE_IMPLEMENT INVOKE_ALL HOOKS!
     foreach ($items as $delta => $item) {
       $elements[$delta] = ['#markup' => $this->viewValue($item)];
     }
@@ -73,9 +75,9 @@ class LinkbackFormatter extends FormatterBase {
    *   The textual output generated.
    */
   protected function viewValue(FieldItemInterface $item) {
-      $send = ($item->linkback_send) ? $this->t('Send linkbacks option is enabled') : $this->t('Send linkbacks option is disabled');
-      $receive = ($item->linkback_receive) ? $this->t('Receive linkbacks option is enabled') : $this->t('Receive linkbacks option is disabled');
-      return $send . "<br/>" . $receive;
+    $send = ($item->linkback_send) ? $this->t('Send linkbacks option is enabled') : $this->t('Send linkbacks option is disabled');
+    $receive = ($item->linkback_receive) ? $this->t('Receive linkbacks option is enabled') : $this->t('Receive linkbacks option is disabled');
+    return $send . "<br/>" . $receive;
   }
 
 }

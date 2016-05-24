@@ -1,10 +1,9 @@
-<?php 
+<?php
+namespace Drupal\linkback\Form;
 /**
  * @file
  * Contains \Drupal\linkback\Form\LinkbackSenderQueueForm.
  */
-
-namespace Drupal\linkback\Form;
 
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
@@ -16,7 +15,9 @@ use Drupal\Core\Queue\SuspendQueueException;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\Core\Config\ConfigFactoryInterface;
 
-
+/**
+ * The class for Linkback sender queue form. Based on FormBase.
+ */
 class LinkbackSenderQueueForm extends FormBase {
 
   /**
@@ -39,7 +40,7 @@ class LinkbackSenderQueueForm extends FormBase {
   /**
    * {@inheritdoc}
    */
-  public function __construct(QueueFactory $queue, QueueWorkerManagerInterface $queue_manager, ConfigFactoryInterface $config_factory ) {
+  public function __construct(QueueFactory $queue, QueueWorkerManagerInterface $queue_manager, ConfigFactoryInterface $config_factory) {
     $this->queueFactory = $queue;
     $this->queueManager = $queue_manager;
     $this->configFactory = $config_factory;
@@ -55,23 +56,24 @@ class LinkbackSenderQueueForm extends FormBase {
       $container->get('config.factory')
     );
   }
-  
+
   /**
    * Gets the cron or manual queue.
+   *
    * @return string the name of the QueueFactory
    */
-   protected function getQueue(){
-     $config = $this->configFactory->get('linkback.settings');
-     return $config->get('use_cron')? 'cron_linkback_sender' : 'manual_linkback_sender';
-   }
-  
+  protected function getQueue() {
+    $config = $this->configFactory->get('linkback.settings');
+    return $config->get('use_cron') ? 'cron_linkback_sender' : 'manual_linkback_sender';
+  }
+
   /**
    * {@inheritdoc}.
    */
   public function getFormId() {
     return 'linkback_sender_queue_form';
   }
-  
+
   /**
    * {@inheritdoc}.
    */
@@ -81,24 +83,22 @@ class LinkbackSenderQueueForm extends FormBase {
 
     $form['help'] = array(
       '#type' => 'markup',
-      '#markup' => $this->t('Submitting this form will process the "@queue" queue which contains @number items.', array('@queue' => $this->getQueue(),'@number' => $queue->numberOfItems())),
+      '#markup' => $this->t('Submitting this form will process the "@queue" queue which contains @number items.', array('@queue' => $this->getQueue(), '@number' => $queue->numberOfItems())),
     );
     $form['actions']['#type'] = 'actions';
-
-
 
     $form['actions']['submit'] = array(
       '#type' => 'submit',
       '#value' => $this->t('Process queue'),
       '#button_type' => 'primary',
-      '#disabled' => $queue->numberOfItems() < 1
+      '#disabled' => $queue->numberOfItems() < 1,
     );
     $form['actions']['delete'] = array(
       '#type' => 'submit',
       '#value' => $this->t('Delete queue'),
       '#button_type' => 'secondary',
       '#submit' => array('::deleteQueue'),
-      '#disabled' => $queue->numberOfItems() < 1
+      '#disabled' => $queue->numberOfItems() < 1,
     );
     return $form;
   }
@@ -112,7 +112,6 @@ class LinkbackSenderQueueForm extends FormBase {
     $queue->deleteQueue();
   }
 
-  
   /**
    * {@inheritdoc}
    */
@@ -122,7 +121,7 @@ class LinkbackSenderQueueForm extends FormBase {
     /** @var QueueWorkerInterface $queue_worker */
     $queue_worker = $this->queueManager->createInstance($this->getQueue());
 
-    while($item = $queue->claimItem()) {
+    while ($item = $queue->claimItem()) {
       try {
         $queue_worker->processItem($item->data);
         $queue->deleteItem($item);
@@ -136,5 +135,5 @@ class LinkbackSenderQueueForm extends FormBase {
       }
     }
   }
-}
 
+}

@@ -5,32 +5,32 @@
  * Contains linkback.module..
  */
 
-use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Queue\QueueFactory;
 use Drupal\Core\Queue\QueueInterface;
 use Symfony\Component\DomCrawler\Crawler;
 
+use Drupal\Core\Routing\RouteMatchInterface;
 
 // User-agent used when extracting titles and excerpts.
-define('VINCULUM_UA', 'Drupal Refback (+http://drupal.org/project/linkback)');
+define('LINKBACK_UA', 'Drupal Linkback (+http://drupal.org/project/linkback)');
 
 // The local node could not be found.
-define('VINCULUM_ERROR_LOCAL_NODE_NOT_FOUND', 1);
+define('LINKBACK_ERROR_LOCAL_NODE_NOT_FOUND', 1);
 
-// The local node could not be used as a ref-back resource (e.g., ref-backs are
+// The local node could not be used as a linkback resource (e.g., linkbacks are
 // disabled on the node).
-define('VINCULUM_ERROR_LOCAL_NODE_REFBACK_NOT_ALLOWED', 2);
+define('LINKBACK_ERROR_LOCAL_NODE_REFBACK_NOT_ALLOWED', 2);
 
-// The ref-back has previously been registered.
-define('VINCULUM_ERROR_REFBACK_ALREADY_REGISTERED', 3);
+// The linkback has previously been registered.
+define('LINKBACK_ERROR_REFBACK_ALREADY_REGISTERED', 3);
 
-// The ref-back source does not contain the link to target
-define('VINCULUM_ERROR_REMOTE_URL_MISSING_LINK', 4);
-
+// The linkback source does not contain the link to target.
+define('LINKBACK_ERROR_REMOTE_URL_MISSING_LINK', 4);
 
 /**
  * Implements hook_help().
+ * @param string $route_name
  */
 function linkback_help($route_name, RouteMatchInterface $route_match) {
   switch ($route_name) {
@@ -45,13 +45,12 @@ function linkback_help($route_name, RouteMatchInterface $route_match) {
   }
 }
 
-
-/*
+/**
  * Implements hook_ENTITY_TYPE_insert().
  */
-function linkback_entity_insert(Drupal\Core\Entity\EntityInterface $entity)
-{
-  //TODO allow other entities to use linkbacks
+function linkback_entity_insert(EntityInterface $entity) {
+
+  // TODO allow other entities to use linkbacks.
   if ($entity->getEntityTypeId() != 'node') {
     return;
   }
@@ -62,17 +61,16 @@ function linkback_entity_insert(Drupal\Core\Entity\EntityInterface $entity)
   /** @var QueueFactory $queue_factory */
   $queue_factory = \Drupal::service('queue');
   /** @var QueueInterface $queue */
-  $queue = $queue_factory->get(\Drupal::config('linkback.settings')->get('use_cron')? 'cron_linkback_sender' : 'manual_linkback_sender');
+  $queue = $queue_factory->get(\Drupal::config('linkback.settings')->get('use_cron') ? 'cron_linkback_sender' : 'manual_linkback_sender');
   $item = new \stdClass();
   $item->nid = $entity->id();
   $queue->createItem($entity);
 
 }
 
-/*
+/**
  * Implements hook_ENTITY_TYPE_update().
  */
-function linkback_entity_update(Drupal\Core\Entity\EntityInterface $entity){
+function linkback_entity_update(EntityInterface $entity) {
   linkback_entity_insert($entity);
 }
-

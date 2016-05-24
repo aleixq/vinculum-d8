@@ -1,8 +1,9 @@
-<?php 
+<?php
 namespace Drupal\linkback\Event;
 
 use Symfony\Component\EventDispatcher\Event;
 use Drupal\Core\Url;
+
 /**
  * Event that is fired when a linkback needs to be send.
  *
@@ -52,7 +53,7 @@ class LinkbackSendEvent extends Event {
   public function getTargetUrl() {
     return $this->targetUrl;
   }
-  
+
   /**
    * Setter for the targetUrl.
    *

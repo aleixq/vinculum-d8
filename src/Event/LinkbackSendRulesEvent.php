@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace Drupal\linkback\Event;
 
@@ -18,7 +18,7 @@ class LinkbackSendRulesEvent extends Event {
   /**
    * The source content.
    *
-   * @vau Drupal\Core\Entity\ContentEntityInterface; 
+   * @vau Drupal\Core\Entity\ContentEntityInterface;
    */
   protected $source;
 
@@ -28,7 +28,6 @@ class LinkbackSendRulesEvent extends Event {
    * @var string
    */
   protected $targetUrl;
-
 
   /**
    * Getter for the sourceUrl.
@@ -59,7 +58,7 @@ class LinkbackSendRulesEvent extends Event {
 
   /**
    * Setter for the targetUrl.
-   * 
+   *
    * @param $url
    */
   public function setTargetUrl($url) {

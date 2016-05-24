@@ -1,4 +1,4 @@
-<?php 
+<?php
 namespace Drupal\linkback\Plugin\QueueWorker;
 
 /**
@@ -11,4 +11,3 @@ namespace Drupal\linkback\Plugin\QueueWorker;
  * )
  */
 class CronLinkbackSender extends LinkbackSender {}
-
