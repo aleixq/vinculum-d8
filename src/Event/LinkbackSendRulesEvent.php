@@ -73,7 +73,7 @@ class LinkbackSendRulesEvent extends Event {
    * @param string
    *   The target url.
    */
-  public function __construct(ContentEntityInterface $source, string $target_url) {
+  public function __construct(ContentEntityInterface $source, $target_url) {
     $this->source = $source;
     $this->targetUrl = $target_url;
   }
